@@ -1,10 +1,11 @@
 # Demo
 
 
-![ezgif-1-8c6816f512](https://github.com/90shree/desktop-pet-kirby/assets/163702108/03e619c2-bb90-48f7-976f-e73bafc6a3b6)
+
+![ezgif-4-fec92e5b61](https://github.com/90shree/desktop-pet-kirby/assets/163702108/6ba6b5e8-f85a-44d7-891f-ea971db11e17)
 
 
-A desktop pet Kirby companion created with Python! It eats (inhales), occasionally calls on the phone and walks around the bottom of your desktop screen.
+A desktop pet Kirby companion created with Python! It eats (inhales), occasionally sleep and walk/flies around the bottom of your desktop screen.
 Also draggable with fall/gravity mechanics!
 
 The art is not mine. 
