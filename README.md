@@ -20,7 +20,7 @@ Gravity/Drop physics was implemented through declaring variables for velocity, a
 # How to run
 Simply extract the 'Kirby.zip' file and run the python executable :)
 
-***Right click the bunny and select "Close Kirby" to close the program!*
+***Right click Kirby and select "Close Kirby" to close the program!*
 
 # If, for any reason, this is not possible:
 
