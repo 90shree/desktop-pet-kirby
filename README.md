@@ -11,9 +11,9 @@ Also draggable with fall/gravity mechanics!
 The art is not mine. 
 
 # How was it made?
-The program is essentially a series of gif-animations ontop of a fitted transparent window, made with the help of the Python module "tkinter" to manipulate GUI aspects of the window. Object Oriented Programming was used to define the window as its own class, and each animation was also drawn by hand using a pixel-art program, then converted into readable gif files. 
+The program is essentially a series of gif-animations ontop of a fitted transparent window, made with the help of the Python module "tkinter" to manipulate GUI aspects of the window. Object Oriented Programming was used to define the window as its own class in order to define its own environment and actions. 
 
-The program picks a random action to preform every seven seconds, while displaying an idle animation in between. 
+The program picks a random action to preform every few seconds, while displaying an idle animation in between. 
 
 Gravity/Drop physics was implemented through declaring variables for velocity, acceleration and gravity.. then adding the gravity variable to the y-velocity (using a plus-equals operator) when the user is not dragging the window, and applying this logic to both acceleration and velocity as well.
 
