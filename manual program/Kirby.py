@@ -107,7 +107,7 @@ class Kirby:
         
             self.current_action = 'idle'
             self.img_sequence = self.idle 
-            self.action_duration = 0
+            self.action_duration = 5
             self.last_action_time = current_time 
         
 
