@@ -6,7 +6,7 @@
 
 
 A desktop pet Kirby companion created with Python! It eats (inhales), occasionally sleep and walk/flies around the bottom of your desktop screen.
-Also draggable with fall/gravity mechanics!
+Also draggable with fall/gravity mechanics.
 
 The art is not mine. 
 
@@ -20,7 +20,7 @@ Gravity/Drop physics was implemented through declaring variables for velocity, a
 
 
 # How to run
-Simply extract the 'Kirby.zip' file and run the python executable :)
+Simply extract the 'executable.zip' file and run the python executable.
 
 ***Right click Kirby and select "Close Kirby" to close the program!*
 
@@ -43,3 +43,5 @@ You will have to run the program using the assets in the "manual program" folder
 First changing the directory to where this program is stored by using the 'cd' command, followed by a space, then your directory.
 
 Then simply the command, "Kirby.py"
+
+You can also run the program directly from its IDE.
