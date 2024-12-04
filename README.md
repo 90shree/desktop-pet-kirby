@@ -2,7 +2,14 @@
 
 
 
-![ezgif-4-fec92e5b61](https://github.com/90shree/desktop-pet-kirby/assets/163702108/6ba6b5e8-f85a-44d7-891f-ea971db11e17)
+
+
+https://github.com/user-attachments/assets/87392517-dfb5-453e-b732-f51efe668347
+
+
+
+
+
 
 
 A desktop pet Kirby companion created with Python! It eats (inhales), occasionally sleep and walk/flies around the bottom of your desktop screen.
