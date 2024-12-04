@@ -20,7 +20,7 @@ The program is essentially a series of gif-animations ontop of a fitted transpar
 
 The program picks a random action to preform every few seconds, while displaying an idle animation in between. 
 
-Gravity/Drop physics was implemented through declaring variables for velocity, acceleration and gravity.. then adding the gravity variable to the y-velocity (using a plus-equals operator) when the user is not dragging the window, and applying this logic to both acceleration and velocity as well.
+Gravity/Drop physics was implemented through declaring variables for velocity, acceleration and gravity.. then adding the gravity variable to the y-velocity in a loop (to simulate gravity's constant downwards force on the window) when the window is falling after being dragged.
 
 
 
