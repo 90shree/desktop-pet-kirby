@@ -10,10 +10,9 @@ https://github.com/user-attachments/assets/b9e87a8c-0ce9-4d17-9aec-5efbeabf8e3e
 
 
 
-A desktop pet Kirby companion created with Python! It eats (inhales), occasionally sleep and walk/flies around the bottom of your desktop screen.
-Also draggable with fall/gravity mechanics.
+A desktop pet Kirby companion created with Python. It eats (inhales), occasionally sleep and walk/flies around the bottom of your desktop screen. It's draggable and can sit ontop of windows and preform all animations without falling off. 
 
-The art is not mine. 
+(The art is not mine.)
 
 # How was it made?
 The program is essentially a series of gif-animations ontop of a fitted transparent window, made with the help of the Python module "tkinter" to manipulate GUI aspects of the window. Object Oriented Programming was used to define the window as its own class in order to define its own environment and actions. 
