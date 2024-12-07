@@ -25,7 +25,7 @@ Gravity/Drop physics was implemented through declaring variables for velocity, a
 
 
 # How to run
-Simply extract the 'executable.zip' file and run the python executable.
+Simply open the contents within the "executable" folder, and run the "Kirby.exe" executable.
 
 ***Right click Kirby and select "Close Kirby" to close the program!*
 
@@ -42,6 +42,8 @@ You will have to run the program using the assets in the "manual program" folder
 'pip install win32gui'
 
 'pip install random'
+
+'pip install pygetwindow'
 
 ## 3. Now you can run the program in Command prompt by:
 
