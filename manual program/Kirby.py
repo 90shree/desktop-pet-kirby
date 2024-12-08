@@ -7,7 +7,7 @@ import pygetwindow as gw
 class Kirby:
     def __init__(self):
         self.window = tk.Tk()
-        self.window.config(highlightbackground='purple')
+        self.window.config(bg='purple')  
         self.window.overrideredirect(True)
         self.window.attributes('-topmost', True)
         self.window.wm_attributes('-transparentcolor', 'purple')
@@ -15,8 +15,9 @@ class Kirby:
         self.load_gifs()
         self.init_variables()
 
-        self.label = tk.Label(self.window, bd=0, bg='purple')
-        self.label.pack()
+        self.label = tk.Label(self.window, bd=0, bg='purple')  
+        self.label.pack(side='bottom', anchor='s')  
+
 
         self.dragging = False
         self.start_x = 0
@@ -31,6 +32,7 @@ class Kirby:
         self.update()
         self.window.mainloop()
 
+
     def load_gifs(self):
         self.sleep = [tk.PhotoImage(file='sleep.gif', format='gif -index %i' % i) for i in range(3)]
         self.eat = [tk.PhotoImage(file='eat.gif', format='gif -index %i' % i) for i in range(12)]
@@ -39,13 +41,15 @@ class Kirby:
         self.idle = [tk.PhotoImage(file='idle.gif', format='gif -index %i' % i) for i in range(4)]
         self.idle2 = [tk.PhotoImage(file='idle2.gif', format='gif -index %i' % i) for i in range(48)]
         self.fall = [tk.PhotoImage(file='fall.gif', format='gif -index %i' % i) for i in range(20)]
+        self.hold = [tk.PhotoImage(file='hold.gif', format='gif -index %i' % i) for i in range(5)]  
+
 
     def init_variables(self):
         self.current_action = 'idle'
         self.img = self.idle[0]
 
         self.x = (self.window.winfo_screenwidth() - 110) / 2
-        self.y = self.window.winfo_screenheight() - 70
+        self.y = self.window.winfo_screenheight() - 100
 
         self.vel_x = 0
         self.vel_y = 0
@@ -55,7 +59,7 @@ class Kirby:
         self.action_duration = 0
         self.is_falling = False
         self.idle_time = 50
-        self.ground_level = self.window.winfo_screenheight() - 115
+        self.ground_level = self.window.winfo_screenheight() - 147
 
     def right_click_menu(self, event):
         menu = tk.Menu(self.window, tearoff=0)
@@ -69,8 +73,21 @@ class Kirby:
         self.window.destroy()
 
     def update(self):
-        self.update_movement()
+        current_time = time.time()
+
+        if self.dragging:
+            self.current_action = 'hold'
+            self.img_sequence = self.hold  
+            frame_interval = 0.1  
+
+            frame_index = int(((current_time - self.last_action_time) / frame_interval) % len(self.img_sequence))
+            self.img = self.img_sequence[frame_index]
+
+        else:
+            self.update_movement()
+
         self.update_window()
+
         self.window.after(10, self.update)
         
     def update_movement(self):
@@ -89,13 +106,13 @@ class Kirby:
 
             window = self.check_near_window()
             if window:
-                self.y = window.top - 70
+                self.y = window.top - 100
                 self.vel_y = 0
                 self.is_falling = False
 
                 if self.current_action == 'walk_left' and self.x > window.left + 10:
                     self.x -= 0.5
-                elif self.current_action == 'walk_right' and self.x + 70 < window.right - 10:
+                elif self.current_action == 'walk_right' and self.x + 100 < window.right - 10:
                     self.x += 0.9
                 else:
                     if self.current_action == 'walk_left':
@@ -154,12 +171,12 @@ class Kirby:
 
             elif self.current_action == 'walk_right':
                 if window:
-                    if self.x + 70 < window.right - 10:
+                    if self.x + 100 < window.right - 10:
                         self.x += 0.9
                     else:
                         self.x -= 2
                         self.start_walking('walk_left')
-                elif self.x + 70 >= self.window.winfo_screenwidth():
+                elif self.x + 100 >= self.window.winfo_screenwidth():
                     self.x -= 2
                     self.start_walking('walk_left')
                 else:
@@ -202,8 +219,8 @@ class Kirby:
             if (
                 self.x + 35 > win.left and
                 self.x + 35 < win.right and
-                self.y + 70 >= win.top and
-                self.y + 70 <= win.top + 15
+                self.y + 100 >= win.top and
+                self.y + 100 <= win.top + 15
             ):
                 return win
         return None
@@ -216,8 +233,10 @@ class Kirby:
         return windows
 
     def update_window(self):
-        self.window.geometry('70x70+{x}+{y}'.format(x=str(int(self.x)), y=str(int(self.y))))
+        self.window.geometry('100x100+{x}+{y}'.format(x=str(int(self.x)), y=str(int(self.y))))
         self.label.configure(image=self.img)
+
+
 
     def start_drag(self, event):
         self.dragging = True
@@ -233,6 +252,8 @@ class Kirby:
 
     def release_drag(self, event):
         self.dragging = False
+
+
 
 
 Kirby()
