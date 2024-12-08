@@ -16,18 +16,19 @@ A desktop pet Kirby companion created with Python. It eats (inhales), occasional
 (The art is not mine.)
 
 # How was it made?
-The program is essentially a series of gif-animations ontop of a fitted transparent window, made with the help of the Python module "tkinter" to manipulate GUI aspects of the window. Object Oriented Programming was used to define the window as its own class in order to define its own environment and actions. 
+The program is essentially a series of gif-animations ontop of a fitted transparent window, made with the help of the Python module "tkinter" to manipulate GUI aspects of the window. 
 
 The program picks a random action to preform every few seconds, while displaying an idle animation in between. 
-
-Gravity/Drop physics was implemented through declaring variables for velocity, acceleration and gravity.. then adding the gravity variable to the y-velocity in a loop (to simulate gravity's constant downwards force on the window) when the window is falling after being dragged.
 
 
 
 # How to run
 Simply open the contents within the "executable" folder, and run the "Kirby.exe" executable.
 
-***Right click Kirby and select "Close Kirby" to close the program!*
+Temporarily turn off virus detection while downloading and extracting the file if it is being flagged as a virus.
+
+***Right click Kirby and select "Close Kirby" to close the program*
+
 
 # If, for any reason, this is not possible:
 
