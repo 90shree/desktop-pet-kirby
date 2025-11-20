@@ -94,22 +94,21 @@ class Kirby:
     def update_movement(self):
         current_time = time.time()
 
-        # physics floor collision
+        # floor collision
         if self.y >= self.ground_level:
-            self.y = self.ground_level  # position Kirby just above the ground
+            self.y = self.ground_level
 
-            # Invert vertical velocity for bounce
-            if self.vel_y > 0:  # only if moving downward
+            if self.vel_y > 0:
                 self.vel_y = -self.vel_y * self.bounce_factor
 
-            self.is_falling = True  # still falling after bounce
+            self.is_falling = True
 
-            # Apply horizontal friction only if on ground
-            if abs(self.vel_x) > 0:
-                self.vel_x *= 0.85
-                if abs(self.vel_x) < 0.1:
-                    self.vel_x = 0
-
+            # Apply friction ONLY if not walking
+            if self.current_action not in ["walk_left", "walk_right"]:
+                if abs(self.vel_x) > 0:
+                    self.vel_x *= 0.85
+                    if abs(self.vel_x) < 0.1:
+                        self.vel_x = 0
 
         if not self.dragging:
             self.vel_y += self.gravity
@@ -118,18 +117,43 @@ class Kirby:
 
             screen_w = self.window.winfo_screenwidth()
 
+            # --- Screen boundary collision with walk direction fix ---
+            if self.x <= 0:
+                self.x = 0
+                self.vel_x *= -self.side_bounce_factor
+                # Ensure animation matches new direction after bounce
+                if self.vel_x > 0:
+                    if self.current_action != "walk_right":
+                        self.current_action = "walk_right"
+                        self.img_sequence = self.walk_right
+                        self.last_action_time = time.time()
+            elif self.x + 100 >= screen_w:
+                self.x = screen_w - 100
+                self.vel_x *= -self.side_bounce_factor
+                # Ensure animation matches new direction after bounce
+                if self.vel_x < 0:
+                    if self.current_action != "walk_left":
+                        self.current_action = "walk_left"
+                        self.img_sequence = self.walk_left
+                        self.last_action_time = time.time()
+
+            # --- WALK ANIMATION BASED ON VELOCITY ---
+            if not self.dragging and not self.is_falling:
+                if self.vel_x > 0:  # moving right
+                    if self.current_action != "walk_right":
+                        self.current_action = "walk_right"
+                        self.img_sequence = self.walk_right
+                        self.last_action_time = time.time()
+                elif self.vel_x < 0:  # moving left
+                    if self.current_action != "walk_left":
+                        self.current_action = "walk_left"
+                        self.img_sequence = self.walk_left
+                        self.last_action_time = time.time()
+
             if self.y < 0:
                 self.y = 0
                 if self.vel_y < 0:
                     self.vel_y = -self.vel_y * self.bounce_factor
-
-            if self.x <= 0:
-                self.x = 0
-                self.vel_x *= -self.side_bounce_factor
-
-            elif self.x + 100 >= screen_w:
-                self.x = screen_w - 100
-                self.vel_x *= -self.side_bounce_factor
 
             if self.vel_y == 0 and abs(self.y - self.ground_level) < 2:
                 self.y = self.ground_level
@@ -145,16 +169,66 @@ class Kirby:
                     self.vel_y = 0
                 self.is_falling = False
 
+            # --- RANDOM ACTION SCHEDULER ---
+            if not self.is_falling and not self.dragging:
+                if current_time - self.last_change_time > self.action_duration:
+
+                    action = random.choice(["idle", "idle2", "walk_left", "walk_right", "eat", "sleep"])
+                    self.last_change_time = current_time
+
+                    # duration rules
+                    if action in ["idle", "idle2"]:
+                        self.action_duration = 60
+                    elif action == "sleep":
+                        self.action_duration = 60
+                    else:
+                        self.action_duration = 10
+
+                    if action == "walk_left":
+                        self.vel_x = -2
+                        self.current_action = "walk_left"
+                        self.img_sequence = self.walk_left
+
+                    elif action == "walk_right":
+                        self.vel_x = 2
+                        self.current_action = "walk_right"
+                        self.img_sequence = self.walk_right
+
+                    elif action == "eat":
+                        self.vel_x = 0
+                        self.current_action = "eat"
+                        self.img_sequence = self.eat
+
+                    elif action == "sleep":
+                        self.vel_x = 0
+                        self.current_action = "sleep"
+                        self.img_sequence = self.sleep
+
+                    elif action == "idle2":
+                        self.vel_x = 0
+                        self.current_action = "idle2"
+                        self.img_sequence = self.idle2
+
+                    else:
+                        self.vel_x = 0
+                        self.current_action = "idle"
+                        self.img_sequence = self.idle
+
+                    self.last_action_time = current_time
+            # -------------------------------
+
             if self.is_falling:
                 if self.current_action != 'fall':
                     self.current_action = 'fall'
                     self.img_sequence = self.fall
                     self.last_action_time = current_time
             else:
+                # Only force idle after falling if NOT walking
                 if self.current_action == 'fall':
-                    self.current_action = 'idle'
-                    self.img_sequence = self.idle
-                    self.last_action_time = current_time
+                    if self.current_action not in ["walk_left", "walk_right"]:
+                        self.current_action = 'idle'
+                        self.img_sequence = self.idle
+                        self.last_action_time = current_time
 
             if hasattr(self, 'img_sequence') and self.current_action:
                 num_frames = len(self.img_sequence)
@@ -217,4 +291,3 @@ class Kirby:
 
 
 Kirby()
-
