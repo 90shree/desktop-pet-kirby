@@ -11,7 +11,7 @@ https://github.com/user-attachments/assets/b9e87a8c-0ce9-4d17-9aec-5efbeabf8e3e
 
 
 
-A desktop pet Kirby companion created with Python. It eats (inhales), occasionally sleep and walk/flies around the bottom of your desktop screen. It's draggable, throwable and can sit ontop of windows and preform all animations without falling off. When thrown, it detects the user's screen boundaries and will bounce off them.
+A desktop pet Kirby companion created with Python. It eats (inhales), occasionally sleep and walk/flies around the bottom of your desktop screen. It's draggable, throwable and can sit ontop of windows and preform all animations without falling off. When thrown, it detects the user's screen boundaries and will bounce within the boundaries before coming to rest, simulating realistic physics mechanisms. 
 
 (The art is not mine.)
 
