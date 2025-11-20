@@ -7,7 +7,7 @@ import pygetwindow as gw
 class Kirby:
     def __init__(self):
         self.window = tk.Tk()
-        self.window.config(bg='purple')  
+        self.window.config(bg='purple')
         self.window.overrideredirect(True)
         self.window.attributes('-topmost', True)
         self.window.wm_attributes('-transparentcolor', 'purple')
@@ -15,9 +15,8 @@ class Kirby:
         self.load_gifs()
         self.init_variables()
 
-        self.label = tk.Label(self.window, bd=0, bg='purple')  
-        self.label.pack(side='bottom', anchor='s')  
-
+        self.label = tk.Label(self.window, bd=0, bg='purple')
+        self.label.pack(side='bottom', anchor='s')
 
         self.dragging = False
         self.start_x = 0
@@ -32,7 +31,6 @@ class Kirby:
         self.update()
         self.window.mainloop()
 
-
     def load_gifs(self):
         self.sleep = [tk.PhotoImage(file='sleep.gif', format='gif -index %i' % i) for i in range(3)]
         self.eat = [tk.PhotoImage(file='eat.gif', format='gif -index %i' % i) for i in range(12)]
@@ -41,8 +39,7 @@ class Kirby:
         self.idle = [tk.PhotoImage(file='idle.gif', format='gif -index %i' % i) for i in range(4)]
         self.idle2 = [tk.PhotoImage(file='idle2.gif', format='gif -index %i' % i) for i in range(48)]
         self.fall = [tk.PhotoImage(file='fall.gif', format='gif -index %i' % i) for i in range(20)]
-        self.hold = [tk.PhotoImage(file='hold.gif', format='gif -index %i' % i) for i in range(5)]  
-
+        self.hold = [tk.PhotoImage(file='hold.gif', format='gif -index %i' % i) for i in range(5)]
 
     def init_variables(self):
         self.current_action = 'idle'
@@ -53,7 +50,13 @@ class Kirby:
 
         self.vel_x = 0
         self.vel_y = 0
-        self.gravity = 0.0981
+        self.gravity = 0.25
+        self.bounce_factor = 0.7
+        self.side_bounce_factor = 0.8
+
+        self.last_drag_positions = []
+        self.max_drag_samples = 5
+
         self.last_action_time = time.time()
         self.last_change_time = time.time()
         self.action_duration = 0
@@ -77,110 +80,81 @@ class Kirby:
 
         if self.dragging:
             self.current_action = 'hold'
-            self.img_sequence = self.hold  
-            frame_interval = 0.1  
+            self.img_sequence = self.hold
+            frame_interval = 0.1
 
             frame_index = int(((current_time - self.last_action_time) / frame_interval) % len(self.img_sequence))
             self.img = self.img_sequence[frame_index]
-
         else:
             self.update_movement()
 
         self.update_window()
-
         self.window.after(10, self.update)
-        
+
     def update_movement(self):
         current_time = time.time()
+
+        # physics floor collision
+        if self.y >= self.ground_level:
+            self.y = self.ground_level  # position Kirby just above the ground
+
+            # Invert vertical velocity for bounce
+            if self.vel_y > 0:  # only if moving downward
+                self.vel_y = -self.vel_y * self.bounce_factor
+
+            self.is_falling = True  # still falling after bounce
+
+            # Apply horizontal friction only if on ground
+            if abs(self.vel_x) > 0:
+                self.vel_x *= 0.85
+                if abs(self.vel_x) < 0.1:
+                    self.vel_x = 0
+
 
         if not self.dragging:
             self.vel_y += self.gravity
             self.y += self.vel_y
+            self.x += self.vel_x
 
-            if self.y >= self.ground_level:
+            screen_w = self.window.winfo_screenwidth()
+
+            if self.y < 0:
+                self.y = 0
+                if self.vel_y < 0:
+                    self.vel_y = -self.vel_y * self.bounce_factor
+
+            if self.x <= 0:
+                self.x = 0
+                self.vel_x *= -self.side_bounce_factor
+
+            elif self.x + 100 >= screen_w:
+                self.x = screen_w - 100
+                self.vel_x *= -self.side_bounce_factor
+
+            if self.vel_y == 0 and abs(self.y - self.ground_level) < 2:
                 self.y = self.ground_level
-                self.vel_y = 0
                 self.is_falling = False
             else:
                 self.is_falling = True
 
-            window = self.check_near_window()
-            if window:
-                self.y = window.top - 100
-                self.vel_y = 0
-                self.is_falling = False
-
-                if self.current_action == 'walk_left' and self.x > window.left + 10:
-                    self.x -= 0.5
-                elif self.current_action == 'walk_right' and self.x + 100 < window.right - 10:
-                    self.x += 0.9
+            if self.y >= self.ground_level:
+                self.y = self.ground_level
+                if abs(self.vel_y) > 1:
+                    self.vel_y = -self.vel_y * self.bounce_factor
                 else:
-                    if self.current_action == 'walk_left':
-                        self.x += 0.5
-                        self.start_walking('walk_right')
-                    elif self.current_action == 'walk_right':
-                        self.x -= 2
-                        self.start_walking('walk_left')
+                    self.vel_y = 0
+                self.is_falling = False
 
             if self.is_falling:
                 if self.current_action != 'fall':
                     self.current_action = 'fall'
                     self.img_sequence = self.fall
                     self.last_action_time = current_time
-            elif self.current_action == 'fall':
-                self.current_action = 'idle'
-                self.img_sequence = self.idle
-                self.last_action_time = current_time
-
-            if not self.is_falling and self.current_action == 'idle':
-                if current_time > self.last_change_time + self.idle_time:
-                    self.last_change_time = current_time
-                    random_action = random.randint(1, 5)
-
-                    if random_action == 1:
-                        self.current_action = 'sleep'
-                        self.img_sequence = self.sleep
-                        self.action_duration = 10
-                    elif random_action == 2:
-                        self.current_action = 'eat'
-                        self.img_sequence = self.eat
-                        self.action_duration = 6
-                    elif random_action in [3, 4]:
-                        direction = 'walk_right' if random_action == 3 else 'walk_left'
-                        self.start_walking(direction)
-                        self.action_duration = 10
-                    elif random_action == 5:
-                        self.current_action = 'idle2'
-                        self.img_sequence = self.idle2
-                        self.action_duration = 20
-
+            else:
+                if self.current_action == 'fall':
+                    self.current_action = 'idle'
+                    self.img_sequence = self.idle
                     self.last_action_time = current_time
-
-            if self.current_action == 'walk_left':
-                if window:
-                    if self.x > window.left + 10:
-                        self.x -= 0.5
-                    else:
-                        self.x += 0.5
-                        self.start_walking('walk_right')
-                elif self.x <= 0:
-                    self.x += 0.5
-                    self.start_walking('walk_right')
-                else:
-                    self.x -= 0.5
-
-            elif self.current_action == 'walk_right':
-                if window:
-                    if self.x + 100 < window.right - 10:
-                        self.x += 0.9
-                    else:
-                        self.x -= 2
-                        self.start_walking('walk_left')
-                elif self.x + 100 >= self.window.winfo_screenwidth():
-                    self.x -= 2
-                    self.start_walking('walk_left')
-                else:
-                    self.x += 0.9
 
             if hasattr(self, 'img_sequence') and self.current_action:
                 num_frames = len(self.img_sequence)
@@ -200,60 +174,46 @@ class Kirby:
                 frame_index = int(((current_time - self.last_action_time) / frame_interval) % num_frames)
                 self.img = self.img_sequence[frame_index]
 
-            if current_time > self.last_action_time + self.action_duration:
-                if self.current_action != 'idle' and not self.is_falling:
-                    self.current_action = 'idle'
-                    self.img_sequence = self.idle
-                    self.action_duration = 20
-                    self.last_action_time = current_time
-
-
-    def start_walking(self, direction):
-        self.current_action = direction
-        self.img_sequence = self.walk_right if direction == 'walk_right' else self.walk_left
-        self.action_duration = random.randint(10, 11) * len(self.img_sequence) * 0.1
-
-
-    def check_near_window(self):
-        for win in self.get_open_windows():
-            if (
-                self.x + 35 > win.left and
-                self.x + 35 < win.right and
-                self.y + 100 >= win.top and
-                self.y + 100 <= win.top + 15
-            ):
-                return win
-        return None
-
-    def get_open_windows(self):
-        windows = []
-        for win in gw.getWindowsWithTitle(''):
-            if win.visible and win.width > 100 and win.height > 100:
-                windows.append(win)
-        return windows
-
     def update_window(self):
-        self.window.geometry('100x100+{x}+{y}'.format(x=str(int(self.x)), y=str(int(self.y))))
+        self.window.geometry(f'100x100+{int(self.x)}+{int(self.y)}')
         self.label.configure(image=self.img)
-
-
 
     def start_drag(self, event):
         self.dragging = True
         self.start_x = event.x_root
         self.start_y = event.y_root
+        self.vel_x = 0
+        self.vel_y = 0
+
+        self.last_drag_positions = []
 
     def drag(self, event):
         if self.dragging:
-            self.x = event.x_root - self.start_x + self.x
-            self.y = event.y_root - self.start_y + self.y
+            dx = event.x_root - self.start_x
+            dy = event.y_root - self.start_y
+
+            self.x += dx
+            self.y += dy
+
             self.start_x = event.x_root
             self.start_y = event.y_root
+
+            self.last_drag_positions.append((time.time(), event.x_root, event.y_root))
+
+            if len(self.last_drag_positions) > self.max_drag_samples:
+                self.last_drag_positions.pop(0)
 
     def release_drag(self, event):
         self.dragging = False
 
+        if len(self.last_drag_positions) >= 2:
+            t1, x1, y1 = self.last_drag_positions[-2]
+            t2, x2, y2 = self.last_drag_positions[-1]
+            dt = t2 - t1
 
+            if dt > 0:
+                self.vel_x = (x2 - x1) / dt * 0.015
+                self.vel_y = (y2 - y1) / dt * 0.015
 
 
 Kirby()
