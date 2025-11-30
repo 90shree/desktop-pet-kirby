@@ -27,7 +27,8 @@ The interface uses a transparent, borderless Tkinter window pinned above all oth
 
 The physics system for the desktop pet is built entirely from scratch by tracking Kirby’s position and velocity on both the horizontal and vertical axes and updating them in small time steps. 
 
-Gravity is implemented by increasing Kirby’s vertical velocity a little bit on every frame of the update loop; because the update loop runs very frequently, this repeated increment creates the effect of continuous downward acceleration. That velocity is then added to Kirby’s vertical position each frame, causing him to fall. Throwability is achieved by recording a short history of the mouse’s positions while the user is dragging Kirby. 
+- Gravity is implemented by increasing Kirby’s vertical velocity a little bit on every frame of the update loop; because the update loop runs very frequently, this repeated increment creates the effect of continuous downward acceleration. That velocity is then added to Kirby’s vertical position each frame, causing him to fall.
+- Throwability is achieved by recording a short history of the mouse’s positions while the user is dragging Kirby. 
 
 When the drag ends, the system compares the last two recorded positions and the time between them in order to calculate an approximate release velocity. That calculated velocity becomes Kirby’s new horizontal and vertical speeds, letting him continue to move in the direction and speed of the user’s flick. Bounciness is handled by detecting when Kirby reaches the floor or hits a horizontal boundary. 
 
