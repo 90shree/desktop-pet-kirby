@@ -16,10 +16,24 @@ A desktop pet Kirby companion created with Python. It eats (inhales), occasional
 (The art is not mine.)
 
 # How was it made?
-The program is essentially a series of gif-animations ontop of a fitted transparent window, made with the help of the Python module "tkinter" to manipulate GUI aspects of the window. 
 
-The program picks a random action to preform every few seconds, while displaying an idle animation in between. 
+I designed the system around a custom animation loop that updates every 10 ms. Each Kirby action (walk, idle, sleep, etc.) is represented by a sequence of GIF frames in a fitted transparent window. The program switches between these frame sequences dynamically based on Kirby’s movement state or scheduled behaviors. A timing system controls animation speed and randomly selects new actions at intervals to make the pet feel more alive.
 
+Kirby moves around the screen under simple physics: gravity, horizontal velocity, friction, and collision detection with screen boundaries. When dragged and released, Kirby inherits velocity calculated from the user’s drag motion, allowing the pet to “throw” and bounce naturally across the screen.
+
+The interface uses a transparent, borderless Tkinter window pinned above all other windows. Kirby can be dragged around with the mouse, and a right-click opens a small contextual menu to close the program.
+
+## The physics
+
+The physics system for the desktop pet is built entirely from scratch by tracking Kirby’s position and velocity on both the horizontal and vertical axes and updating them in small time steps. 
+
+Gravity is implemented by increasing Kirby’s vertical velocity a little bit on every frame of the update loop; because the update loop runs very frequently, this repeated increment creates the effect of continuous downward acceleration. That velocity is then added to Kirby’s vertical position each frame, causing him to fall. Throwability is achieved by recording a short history of the mouse’s positions while the user is dragging Kirby. 
+
+When the drag ends, the system compares the last two recorded positions and the time between them in order to calculate an approximate release velocity. That calculated velocity becomes Kirby’s new horizontal and vertical speeds, letting him continue to move in the direction and speed of the user’s flick. Bounciness is handled by detecting when Kirby reaches the floor or hits a horizontal boundary. 
+
+When that happens, his velocity along the impacted axis is reversed and scaled down by a multiplier less than one, which simulates energy loss and makes each bounce progressively smaller. Additionally, when Kirby is on the ground and not walking, the horizontal velocity is gradually reduced by multiplying it by a friction factor each frame, causing him to slow to a stop rather than slide indefinitely. 
+
+All of these elements, gravity updates, velocity-based motion, drag-release velocity calculation, boundary collision checks, bounce scaling, and ground friction, combine to form a simple but fully custom physics model that drives Kirby’s movement.
 
 
 # How to run
