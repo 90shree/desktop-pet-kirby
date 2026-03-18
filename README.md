@@ -3,7 +3,7 @@
 
 Real-time Uncut Demo:
 
-https://github.com/user-attachments/assets/b9e87a8c-0ce9-4d17-9aec-5efbeabf8e3e
+https://github.com/user-attachments/assets/
 
 ![idle](https://github.com/user-attachments/assets/1a235b9a-8910-437b-b85a-9b0fb1e44d58) ![idle2](https://github.com/user-attachments/assets/f961a8c6-3b42-4b4c-b55e-c6cfb0d095bc) ![eat](https://github.com/user-attachments/assets/b81488cc-fa9b-4461-bdc5-d8a7bc97d5e8) ![sleep](https://github.com/user-attachments/assets/ebffb0ff-d294-4c68-aa62-e898bd7778a3) ![walkright](https://github.com/user-attachments/assets/98aaf927-653b-4722-abe9-cef544ff0395)
 
