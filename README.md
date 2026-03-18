@@ -19,12 +19,12 @@ Bring your screen to life with a lovable Kirby pet built in Python! 💖 This ti
 
 ## 🌟 Kirby will:
 
-🌀 Inhale: Kirby snacks on anything in sight
-😴 Sleepy Time: Occasionally dozes off just like a real pet
-🚶‍♂️ Walks & Floats: Wanders and flies along the bottom of your screen
-🖱️ Fully Interactive: Drag, toss, bounce and play with Kirby anytime
-🎯 Physics-Based Movement: Throw Kirby and watch it bounce realistically off screen edges
-🪟 Window-Top Magic: Sits on top of your apps without falling off
+🌀 Inhale: Kirby snacks on anything in sight  
+😴 Sleepy Time: Occasionally dozes off just like a real pet  
+🚶‍♂️ Walks & Floats: Wanders and flies along the bottom of your screen  
+🖱️ Fully Interactive: Drag, toss, bounce and play with Kirby anytime  
+🎯 Physics-Based Movement: Throw Kirby and watch it bounce realistically off screen edges  
+🪟 Window-Top Magic: Sits on top of your apps without falling off  
 
 💫 Whether you’re studying, coding, or just chilling, Kirby keeps you company with cute animations and playful behavior.
 
