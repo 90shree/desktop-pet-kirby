@@ -5,7 +5,7 @@ Real-time Uncut Demo:
 
 https://github.com/user-attachments/assets/b9e87a8c-0ce9-4d17-9aec-5efbeabf8e3e
 
-![idle](https://github.com/user-attachments/assets/1a235b9a-8910-437b-b85a-9b0fb1e44d58) ![idle2](https://github.com/user-attachments/assets/f961a8c6-3b42-4b4c-b55e-c6cfb0d095bc) ![eat](https://github.com/user-attachments/assets/b81488cc-fa9b-4461-bdc5-d8a7bc97d5e8) ![fall](https://github.com/user-attachments/assets/3fe3acf2-5b4c-44a8-93ba-88c9dea6b38e)
+![idle](https://github.com/user-attachments/assets/1a235b9a-8910-437b-b85a-9b0fb1e44d58) ![idle2](https://github.com/user-attachments/assets/f961a8c6-3b42-4b4c-b55e-c6cfb0d095bc) ![eat](https://github.com/user-attachments/assets/b81488cc-fa9b-4461-bdc5-d8a7bc97d5e8) 
 
 
 
