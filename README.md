@@ -5,13 +5,25 @@ Real-time Uncut Demo:
 
 https://github.com/user-attachments/assets/b9e87a8c-0ce9-4d17-9aec-5efbeabf8e3e
 
+![idle](https://github.com/user-attachments/assets/1a235b9a-8910-437b-b85a-9b0fb1e44d58) ![idle2](https://github.com/user-attachments/assets/f961a8c6-3b42-4b4c-b55e-c6cfb0d095bc) ![eat](https://github.com/user-attachments/assets/b81488cc-fa9b-4461-bdc5-d8a7bc97d5e8) ![fall](https://github.com/user-attachments/assets/3fe3acf2-5b4c-44a8-93ba-88c9dea6b38e)
 
 
 
 
+# ✨ Meet Your Adorable Desktop Companion: Kirby! ✨
 
+Bring your screen to life with a lovable Kirby pet built in Python! 💖 This tiny companion hangs out right on your desktop, adding fun, charm, and a bit of chaos to your day.
 
-A desktop pet Kirby companion created with Python. It eats (inhales), occasionally sleep and walk/flies around the bottom of your desktop screen. It's draggable, throwable and can sit ontop of windows and preform all animations without falling off. When thrown, it detects the user's screen boundaries and will bounce within the boundaries before coming to rest, simulating realistic physics mechanisms.
+## 🌟 Kirby will:
+
+🌀 Inhale: Kirby snacks on anything in sight
+😴 Sleepy Time: Occasionally dozes off just like a real pet
+🚶‍♂️ Walks & Floats: Wanders and flies along the bottom of your screen
+🖱️ Fully Interactive: Drag, toss, bounce and play with Kirby anytime
+🎯 Physics-Based Movement: Throw Kirby and watch it bounce realistically off screen edges
+🪟 Window-Top Magic: Sits on top of your apps without falling off
+
+💫 Whether you’re studying, coding, or just chilling, Kirby keeps you company with cute animations and playful behavior.
 
 (The art is not mine.)
 
