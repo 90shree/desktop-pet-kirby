@@ -65,18 +65,16 @@ You will have to run the program using the assets in the "manual program" folder
 
 ## 2. Install the necessary modules needed to run this program with the following commands:
 
-'pip install tk'
-
-'pip install win32gui'
-
-'pip install random'
-
-'pip install pygetwindow'
+`pip install tk`
+`pip install win32gui`
+`pip install random`
+`pip install pygetwindow`
 
 ## 3. Now you can run the program in Command prompt by:
 
 First changing the directory to where this program is stored by using the 'cd' command, followed by a space, then your directory.
 
-Then simply the command, "Kirby.py"
+Then simply the command, 
+`Kirby.py`
 
 You can also run the program directly from its IDE.
